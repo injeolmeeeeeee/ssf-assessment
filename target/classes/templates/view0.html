@@ -23,7 +23,7 @@
                 <td th:text="${event.eventId}">...</td>
                 <td th:text="${event.eventName}">...</td>
                 <td th:text="${event.eventSize}">...</td>
-                <td th:text="${event.eventDate}">...</td>
+                <td th:text="${event.format(eventDate,'dd-MM-yyyy')}">...</td>
                 <td th:text="${event.participants}">...</td>
                 <button type="submit">Register</button>
             </tr>

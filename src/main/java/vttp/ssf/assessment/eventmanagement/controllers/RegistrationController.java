@@ -1,8 +1,10 @@
 package vttp.ssf.assessment.eventmanagement.controllers;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +17,11 @@ import vttp.ssf.assessment.eventmanagement.models.Event;
 import vttp.ssf.assessment.eventmanagement.models.RegistrationForm;
 import vttp.ssf.assessment.eventmanagement.repositories.RedisRepository;
 
+@Controller
 public class RegistrationController {
     
     private RedisRepository redisRepository;
+    // private RegistrationForm registrationForm;
 
     // TODO: Task 6
 
@@ -44,10 +48,29 @@ public class RegistrationController {
         if (bindingResult.hasErrors()){
             return "eventregister";
         }
-        return null;
+
+        if (!checkAge(registrationForm.getBirthDate())) {
+            model.addAttribute("error", "You must be above 21 years old to register for the event");
+            return "ErrorRegistration";
+        }
+
+        int participants = event.getParticipants() + Integer.parseInt(registrationForm.getNoOfTickets());
+
+        if (participants > event.getEventSize()) {
+            model.addAttribute("error", "Your request for tickets has exceeded the event size");
+            return "ErrorRegistration";
+        } else {
+            event.setParticipants(participants);
+            model.addAttribute("event", event);
+            return "SuccessRegistration";
+        }
     }
 
-    public void getAge(LocalDate dobEntered) {
-        Date today = Date.now(); 
+    public boolean checkAge(Date dobEntered) {
+        LocalDate dob = dobEntered.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate today = LocalDate.now(); 
+        int age = today.getYear() - dob.getYear();
+
+        return age>=21;
     }
 }

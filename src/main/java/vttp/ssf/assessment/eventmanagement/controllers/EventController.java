@@ -1,6 +1,6 @@
 package vttp.ssf.assessment.eventmanagement.controllers;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -23,11 +24,8 @@ public class EventController {
 	@Autowired
 	RedisRepository redisRepository;
 
-	private static List<Event> events = new ArrayList<Event>();
-
-
 	@GetMapping("/listing")
-	public String displayEvent(HttpSession session, Model model, BindingResult result){
+	public String displayEvent(HttpSession session, Model model, @ModelAttribute("event"), BindingResult result){
 		
 		List<Event> events = redisRepository.getAllEvents();
 		model.addAttribute("events", events);

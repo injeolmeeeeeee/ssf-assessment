@@ -3,5 +3,6 @@
 /Users/anjalieaswaran/Documents/VTTP/GitHub/ssf-assessment/src/main/java/vttp/ssf/assessment/eventmanagement/repositories/RedisRepository.java
 /Users/anjalieaswaran/Documents/VTTP/GitHub/ssf-assessment/src/main/java/vttp/ssf/assessment/eventmanagement/RedisConfig.java
 /Users/anjalieaswaran/Documents/VTTP/GitHub/ssf-assessment/src/main/java/vttp/ssf/assessment/eventmanagement/EventmanagementApplication.java
+/Users/anjalieaswaran/Documents/VTTP/GitHub/ssf-assessment/src/main/java/vttp/ssf/assessment/eventmanagement/models/RegistrationForm.java
 /Users/anjalieaswaran/Documents/VTTP/GitHub/ssf-assessment/src/main/java/vttp/ssf/assessment/eventmanagement/controllers/RegistrationController.java
 /Users/anjalieaswaran/Documents/VTTP/GitHub/ssf-assessment/src/main/java/vttp/ssf/assessment/eventmanagement/controllers/EventController.java

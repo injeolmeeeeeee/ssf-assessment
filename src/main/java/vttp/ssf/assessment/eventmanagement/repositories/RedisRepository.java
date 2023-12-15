@@ -4,21 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.Resource;
 import vttp.ssf.assessment.eventmanagement.models.Event;
 
+@Repository
 public class RedisRepository {
 
 	// TODO: Task 2
 
 	private String hashRef = "events";
+
+	@Autowired
+	private RedisTemplate<String, Event> redisEventTemplate;
+
 	@Resource(name="redisEventTemplate")
 	private HashOperations<String, String, Event> hashOps;
 
 	public void saveRecord(Event event) {
-		hashOps.put(hashRef, event.getEventId().toString(), event);
+		redisEventTemplate.opsForHash().put(hashRef, event.getEventId().toString(), event);
 	}
 
 	// TODO: Task 3

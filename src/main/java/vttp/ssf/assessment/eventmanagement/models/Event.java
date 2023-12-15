@@ -1,17 +1,22 @@
 package vttp.ssf.assessment.eventmanagement.models;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 // "eventId": 1,
 // 		"eventName": "Christmas Eve Party",
 // 		"eventSize": 20,
 // 		"eventDate": 1703415600000,
 // 		"participants": 0
-public class Event {
+public class Event implements Serializable{
 
     private Integer eventId;
     private String eventName;
     private Integer eventSize;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date eventDate;
     private Integer participants;
 
@@ -46,7 +51,9 @@ public class Event {
         this.participants = participants;
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Event [eventId=" + eventId + ", eventName=" + eventName + ", eventSize=" + eventSize + ", eventDate="
+                + eventDate + ", participants=" + participants + "]";
+    }
 }

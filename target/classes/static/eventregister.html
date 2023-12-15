@@ -35,6 +35,10 @@
 
             </tr>
             <tr>
+                <td>Gender:</td>
+                <td><input type="text" name="gender" th:field="*{gender}">
+            </tr>
+            <tr>
                 <td>Number of Tickets:</td>
                 <td><input type="number" name="noOfTickets" th:field="*{noOfTickets}">
                 <div class="error" th:if="${#fields.hasErrors('noOfTickets')}" th:errors="*{noOfTickets}"></div></td>

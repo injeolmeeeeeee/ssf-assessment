@@ -6,18 +6,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Service;
 
 import vttp.ssf.assessment.eventmanagement.models.Event;
 
-// @SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked")
+@Service
 public class DatabaseService {
 
     // TODO: Task 1
@@ -42,14 +44,14 @@ public class DatabaseService {
         Object object = jsonParser.parse(data);
 
         JSONArray jsonArray = (JSONArray) object;
-        // System.out.println("jsonArray size: " + jsonArray.size());
-        System.out.println("jsonArray list of objects: " + jsonArray);
 
         List<Event> events = new ArrayList<>();
-        jsonArray.forEach((event -> {
-            Event event1 = parseEventObject((JSONObject) event);
-            events.add(event1);
-        }));
+        jsonArray.forEach(e -> {
+            Event event = parseEventObject((JSONObject) e);
+            events.add(event);
+        });
+
+        events.forEach(System.out::println);
 
         return events;
     }
@@ -57,26 +59,22 @@ public class DatabaseService {
     private Event parseEventObject(JSONObject jsonEvent) {
         Event event = new Event();
 
-        JSONObject jsonEventObject = (JSONObject) jsonEvent.get("event");
-        System.out.println(jsonEventObject);
-
-        // "eventId": 1,
-        // "eventName": "Christmas Eve Party",
-        // "eventSize": 20,
-        // "eventDate": 1703415600000,
-        // "participants": 0
-
-        event.setEventId(Integer.parseInt(jsonEventObject.get("eventId").toString()));
-        event.setEventName(jsonEventObject.get("eventName").toString());
-        event.setEventSize(Integer.parseInt(jsonEventObject.get("eventSize").toString()));
-        // event.setEventDate(Integer.parseInt(jsonEventObject.get("eventDate").toString()));
-
-        long milliseconds = (long) jsonEventObject.get("eventDate");
-        Instant instant = Instant.ofEpochMilli(milliseconds);
-        Date date = Date.from(instant);
-        event.setEventDate(date);
-        event.setParticipants(Integer.parseInt(jsonEventObject.get("participants").toString()));
-
+            event.setEventId(Integer.parseInt(jsonEvent.get("eventId").toString()));
+            event.setEventName(jsonEvent.get("eventName").toString());
+            event.setEventSize(Integer.parseInt(jsonEvent.get("eventSize").toString()));
+        
+            Object dateObject = jsonEvent.get("eventDate");
+            Long dateLong = (Long) dateObject;
+            Date date = new Date(dateLong);
+    
+            event.setEventDate(date);
+            event.setParticipants(Integer.parseInt(jsonEvent.get("participants").toString()));
         return event;
     }
 }
+
+// "eventId": 1,
+// "eventName": "Christmas Eve Party",
+// "eventSize": 20,
+// "eventDate": 1703415600000,
+// "participants": 0
