@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Register event</h1>
+    <h3>You have choosen to register for the following event:</h3>
+    <h2 th:text="${event.eventName}"></h2>
+    <h2 th:text="${event.eventDate}"></h2>
+    <form method="POST" th:object="${registrationform}">
+        <table>
+            <tr>
+                <td>Full Name:</td>
+                <td><input type="text" name="fullName" th:field="*{fullName}">
+                <div class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div></td>
+            </tr>
+            <tr>
+                <td>Date of Birth:</td>
+                <td><input type="date" name="birthDate" th:field="*{birthDate}">
+                <div class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" name="email" th:field="*{email}">
+                <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div></td>
+
+            </tr>
+            <tr>
+                <td>Mobile Number:</td>
+                <td><input type="tel" name="mobileNumber" th:field="*{mobileNumber}">
+                <div class="error" th:if="${#fields.hasErrors('mobileNumber')}" th:errors="*{mobileNumber}"></div></td>
+
+            </tr>
+            <tr>
+                <td>Number of Tickets:</td>
+                <td><input type="number" name="noOfTickets" th:field="*{noOfTickets}">
+                <div class="error" th:if="${#fields.hasErrors('noOfTickets')}" th:errors="*{noOfTickets}"></div></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Register</button>
+                    <!-- <button type="submit" formaction="/pizza/cancel">Register</button> -->
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
