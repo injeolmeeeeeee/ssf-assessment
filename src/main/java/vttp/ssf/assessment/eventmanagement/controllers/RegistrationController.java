@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
@@ -18,15 +20,19 @@ import vttp.ssf.assessment.eventmanagement.models.RegistrationForm;
 import vttp.ssf.assessment.eventmanagement.repositories.RedisRepository;
 
 @Controller
+@RequestMapping("/register")
 public class RegistrationController {
     
     private RedisRepository redisRepository;
-    // private RegistrationForm registrationForm;
+    private RegistrationForm registrationForm;
 
     // TODO: Task 6
 
-    @GetMapping("/register/2")
-	public String registration(Model model) {
+    @GetMapping("/{eventId}")
+	public String registration(@PathVariable Integer eventId, Model model) {
+        Event event = redisRepository.getEvent(eventId);
+
+        model.addAttribute("event", event);
 
 	    RegistrationForm registrationForm = new RegistrationForm();
         model.addAttribute("registrationForm", registrationForm);
@@ -35,8 +41,8 @@ public class RegistrationController {
 	}
 
     // TODO: Task 7
-    @PostMapping("/register/2")
-    public String processRegistration(@RequestParam Integer eventId,
+    @PostMapping("/{eventId}")
+    public String processRegistration(@PathVariable Integer eventId,
                                     @Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, 
                                     BindingResult bindingResult, Model model) {
         //bindingresult to check for validation
@@ -62,7 +68,7 @@ public class RegistrationController {
         } else {
             event.setParticipants(participants);
             model.addAttribute("event", event);
-            return "SuccessRegistration";
+            return "redirect:/SuccessRegistration";
         }
     }
 

@@ -20,12 +20,15 @@
                 <th>Action</th>
             </tr>
             <tr th:each="event : ${events}">
-                <td th:text="${event.eventId}">...</td>
-                <td th:text="${event.eventName}">...</td>
-                <td th:text="${event.eventSize}">...</td>
-                <td th:text="${event.format(eventDate,'dd-MM-yyyy')}">...</td>
-                <td th:text="${event.participants}">...</td>
-                <button type="submit">Register</button>
+                <td th:text="${event.eventId}"></td>
+                <td th:text="${event.eventName}"></td>
+                <td th:text="${event.eventSize}"></td>
+                <td th:text="${#dates.format(event.eventDate,'dd-MM-yyyy')}"></td>
+                <td>
+                    <a th:href="@{/events/register/{eventId}(eventId=${event.eventId})}" class="btn btn-primary">Register</a>
+                </td>
+                </form>
+                </td>
             </tr>
         </table>
     </div>

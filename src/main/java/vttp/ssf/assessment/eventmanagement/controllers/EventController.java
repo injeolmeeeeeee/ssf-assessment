@@ -25,7 +25,7 @@ public class EventController {
 	RedisRepository redisRepository;
 
 	@GetMapping("/listing")
-	public String displayEvent(HttpSession session, Model model, @ModelAttribute("event"), BindingResult result){
+	public String displayEvent(HttpSession session, Model model, @ModelAttribute("event") Event event, BindingResult result){
 		
 		List<Event> events = redisRepository.getAllEvents();
 		model.addAttribute("events", events);
